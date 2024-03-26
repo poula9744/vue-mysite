@@ -4,6 +4,7 @@ import LoginFormView from '../views/user/LoginFormView.vue'
 import ModifyFormView from '../views/user/ModifyFormView.vue'
 import JoinFormView from '../views/user/JoinFormView.vue'
 import JoinOkView from '../views/user/JoinOkView.vue'
+import AddListView from '../views/guestbook/addListView.vue'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/user/joinok',
     name: '/user/joinok',
     component: JoinOkView
+  },
+  {
+    path: '/guestbook/addlist',
+    name: '/guestbook/addlist',
+    component: AddListView
   }
 
 ]
