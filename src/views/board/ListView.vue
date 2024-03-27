@@ -64,7 +64,7 @@
             
                         
                         <div v-if="this.$store.state.authUser != null">
-                            <a id="btn_write" href="">글쓰기</a>
+                            <router-link id="btn_write" to="/board/writeform">글쓰기</router-link>
                         </div>
                         <div class="clear"></div>
                         <div>

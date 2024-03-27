@@ -70,7 +70,7 @@
 
 <script>
 import "@/assets/css/board.css";
-//import axios from 'axios';
+import axios from 'axios';
 import AppFooter from '@/components/AppFooter.vue';
 import AppHeader from '@/components/AppHeader.vue';
 
@@ -91,7 +91,34 @@ export default {
     methods: {
         write(){
             console.log("등록");
-            
+            axios({
+                method: 'post',  //put,post,delete
+                url: 'http://localhost:9000/api/board',
+                headers: { "Content-Type": "application/json; charset=utf-8" 
+                , "Authorization": "Bearer " + this.$store.state.token
+                }, //전송타입
+                //params: phonebookVo, //get방식 파라미터로 값이 전달
+                data: this.boardVo, //put, post, delete 방식 자동으로 JSON으로 변환 전달
+
+                responseType: 'json' //수신타입
+                }).then(response => {
+                    console.log(response);
+                    console.log(response.data.apiData); //수신데이타
+
+                    if(response.data.result == "success"){
+                        console.log("result: success");
+
+                        //리스트로 이동
+                        this.$router.push("/board/list");
+                    } else {
+                        console.log(response.data.message);
+                        alert("로그인해주세요.");
+                    }
+
+
+                }).catch(error => {
+                    console.log(error);
+                });
         }
     },
     created(){}
