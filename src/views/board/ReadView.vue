@@ -62,8 +62,9 @@
                                     {{ boardVo.content }}
                                 </span>
                             </div>
-                            
-                            <a id="btn_modify" href="">수정</a>
+                            <div v-if="this.$store.state.authUser.no == boardVo.userNo">
+                                <router-link id="btn_modify" v-bind:to="`/board/modify/${this.$route.params.no}`">수정</router-link>
+                            </div>
                             <a id="btn_modify" href="">목록</a>
                             
                         </form>
@@ -105,7 +106,8 @@ export default {
                 title: "",
                 name: "",
                 hit: "",
-                regDate: ""
+                regDate: "",
+                userNo: ""
             }
         };
     },
@@ -113,6 +115,7 @@ export default {
         read(){
             console.log("read");
             console.log(this.boardVo.no);
+            console.log(this.$store.state.authUser.no);
             axios({
                 method: 'get', // put, post, delete
                 url: 'http://localhost:9000/api/board/'+ this.boardVo.no,

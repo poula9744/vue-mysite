@@ -31,7 +31,7 @@
 
                 <div id="board">
                     <div id="modifyForm">
-                        <form action="#" method="get">
+                        <form v-on:submit.prevent="modify" method="put">
                             <!-- 작성자 -->
                             <div class="form-group">
                                 <span class="form-text">작성자</span>
@@ -57,12 +57,14 @@
                             </div>
                         
                             
-                        
+                            
                             <!-- 내용 -->
                             <div class="form-group">
                                 <textarea id="txt-content" v-model="boardVo.content"></textarea>
                             </div>
-                            
+
+                            <input type="text" name="no" v-model="this.$route.params.no">
+
                             <a id="btn_cancel" href="">취소</a>
                             <button id="btn_modify" type="submit" >수정</button>
                             
@@ -102,18 +104,22 @@ export default {
     data() {
         return {
             boardVo: {
-                no: this.$route.params.no,
+                no: "",
                 title: "",
                 name: "",
                 hit: "",
-                regDate: ""
+                content:"",
+                regDate: "",
+                userNo: ""
             }
         };
     },
     methods: {
         read(){
             console.log("read");
+            this.boardVo.no = this.$route.params.no;
             console.log(this.boardVo.no);
+            
             axios({
                 method: 'get', // put, post, delete
                 url: 'http://localhost:9000/api/board/'+ this.boardVo.no,
@@ -124,6 +130,39 @@ export default {
             }).then(response => {
                 console.log(response.data); //수신데이타
                 this.boardVo = response.data;
+            }).catch(error => {
+                console.log(error);
+            });
+        },
+        modify(){
+            console.log("modify");
+            this.boardVo.no = this.$route.params.no;
+            console.log(this.boardVo);
+            axios({
+                method: 'put',  //put,post,delete
+                url: 'http://localhost:9000/api/board',
+                headers: { "Content-Type": "application/json; charset=utf-8" 
+                , "Authorization": "Bearer " + this.$store.state.token
+                }, //전송타입
+                //params: phonebookVo, //get방식 파라미터로 값이 전달
+                data: this.boardVo, //put, post, delete 방식 자동으로 JSON으로 변환 전달
+
+                responseType: 'json' //수신타입
+            }).then(response => {
+                console.log(response);
+                console.log(response.data.apiData); //수신데이타
+
+                if(response.data.result == "success"){
+                    console.log("result: success");
+
+                    this.$router.push("/board/read/"+this.$route.params.no);
+                    
+                } else {
+                    console.log(response.data.message);
+                    alert("수정할 수 없습니다");
+                    this.$router.push("/board/list");
+                }
+
             }).catch(error => {
                 console.log(error);
             });
