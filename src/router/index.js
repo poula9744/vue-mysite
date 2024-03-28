@@ -12,6 +12,7 @@ import BoardListView from '../views/board/ListView.vue'
 import BoardModifyFormView from '../views/board/ModifyFormView.vue'
 import BoardReadView from '../views/board/ReadView.vue'
 import BoardWriteFormView from '../views/board/WriteFormView.vue'
+import GalleryListView from '../views/gallery/ListView.vue'
 
 const routes = [
   {
@@ -78,6 +79,11 @@ const routes = [
     path: '/board/writeform',
     name: '/board/writeform',
     component: BoardWriteFormView
+  },
+  {
+    path: '/gallery/list',
+    name: '/gallery/list',
+    component: GalleryListView
   }
 
 ]

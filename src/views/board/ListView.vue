@@ -68,7 +68,7 @@
                         </div>
                         <div class="clear"></div>
                         <div>
-                            <button id="btn_moreBoard" type="button">글 가져오기</button>
+                            <button id="btn_moreBoard" type="button" v-on:click="more">글 가져오기</button>
                         </div>
                         
                     </div>
@@ -129,6 +129,10 @@ export default {
             }).catch(error => {
                 console.log(error);
             });
+        },
+        more(){
+            console.log("더보기");
+            
         }
     },
     created(){
